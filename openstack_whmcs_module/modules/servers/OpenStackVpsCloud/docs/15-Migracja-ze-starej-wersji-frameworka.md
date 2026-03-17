@@ -1,9 +1,0 @@
-- `setCustomJsCode` - Całkowicie usunięta. Jeżeli potrzebujesz uruchomić własny kod stwórz odpowiedni komponent.  
-- `BaseStandaloneFormExtSections` Zamień na `\ModulesGarden\OpenStackVpsCloud\Components\Form\FormOneColumn`
-- `BaseSection` - zamień na `\ModulesGarden\OpenStackVpsCloud\Components\Widget\Widget`
-- `setFormType` - Zamień wywołanie metody`$this->setFormType(FormConstants::UPDATE);` na atrybut klasy `phpprotected $providerAction                   = AbstractCrudProvider::ACTION_UPDATE;`
-- `setCustomActionName` Usunięte, wykorzystaj akcje na np: onClick
-- `addField` nie da się już wykonać na innych komponentach. Jeżeli chcesz dodać pole do formularza wykorzystaj addField albo createField z Buildera w formularzu
-- `addSection` - zamień na `addElement`
-- `setDescription` - usunięte, wykorzystaj FormBuilder wraz z metodą addField i parametrem 
-- `setHtmlAttributes- usunięte

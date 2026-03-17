@@ -1,7 +1,0 @@
-<li :id="cid_"  subItem class='lu-list-group__item' :class="css_">
-    <div class='lu-list-group__top lu-top'>
-        <span></span>
-        <div class='lu-top__title' v-if="title_">{{title_}}</div>
-        <component :key="element.uniq" v-bind="element.slots" v-bind:is="element.name" v-for="(element, key) in elements_.elements" v-on="$listeners"></component>
-    </div>
-</li>
