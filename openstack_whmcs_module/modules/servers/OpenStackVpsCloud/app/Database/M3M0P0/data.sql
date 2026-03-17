@@ -1,0 +1,1 @@
+UPDATE `#prefix#Job` SET `status` = 'cancelled' WHERE `status` != 'finished';

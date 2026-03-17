@@ -1,0 +1,38 @@
+### Basic Structure
+
+- `app` - contains the main logic of the module
+  - `Commands` - commands executed via CLI
+  - `Config` - module configuration
+  - `Configuration` - module configuration
+  - `Cron` - commands executed via CLI
+  - `Database`
+  - `Events` - events
+  - `Helpers`
+  - `Hooks` - hooks
+  - `Http` - controllers
+    - `Client`
+    - `Admin`
+    - `Action`
+  - `Jobs` - background jobs or tasks
+  - `Listeners` - listeners
+  - `Models` - database models
+  - `UI` - user interface elements; contains most UI-related files
+    - `Actions` - used by provisioning modules, e.g., ConfigOptions
+    - `Admin` - UI elements for administrators only
+      - `MyController` - views loaded by `MyController`
+        - `MyActions` - views used in controller actions
+    - `Client` - UI elements for clients only
+      - `MyController` - views loaded by `MyController`
+      - `MyActions` - views used in controller actions
+    - `Shared` - shared UI elements
+- `commands`
+- `components` - core UI elements; must not be edited. Part of the core.
+- `core` - framework files; must not be edited directly in the module.
+- `cron` - specifically `cron.php`, which allows execution of commands from the `Cron/` directory
+- `langs` - language files
+- `install` - collection of scripts responsible for framework installation and updates. Do not edit.
+- `packages` - set of packages providing various features. Packages can be disabled or removed, but must not be edited directly. Part of the core.
+- `resources` - CSS and JS files
+- `storage` - module data storage
+- `templates` - allows overriding HTML and JS files of components
+- `vendor` - third-party libraries

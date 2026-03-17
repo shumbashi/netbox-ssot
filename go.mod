@@ -1,10 +1,11 @@
 module github.com/src-doo/netbox-ssot
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/PaloAltoNetworks/pango v0.10.2
 	github.com/cisco-en-programmability/dnacenter-go-sdk/v7 v7.0.0
+	github.com/gophercloud/gophercloud/v2 v2.11.1
 	github.com/hetznercloud/hcloud-go/v2 v2.36.0
 	github.com/luthermonson/go-proxmox v0.2.1
 	github.com/ovirt/go-ovirt v4.3.4+incompatible

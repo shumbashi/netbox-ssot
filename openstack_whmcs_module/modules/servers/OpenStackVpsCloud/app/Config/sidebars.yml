@@ -1,0 +1,16 @@
+openstackVpsCloudManagement:
+  backups:
+    href: clientarea.php?modop=custom&a=management&mg-page=backup&action=productdetails&id=1
+    order: 1
+  console:
+    href: clientarea.php?modop=custom&a=management&mg-page=console&action=productdetails&id=1
+    order: 2
+  firewall:
+    href: clientarea.php?modop=custom&a=management&mg-page=firewall&action=productdetails&id=1
+    order: 3
+  reinstall:
+    href: clientarea.php?modop=custom&a=management&mg-page=rebuild&action=productdetails&id=1
+    order: 4
+  snapshots:
+    href: clientarea.php?modop=custom&a=management&mg-page=snapshots&action=productdetails&id=1
+    order: 5

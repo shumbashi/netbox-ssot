@@ -1,0 +1,16 @@
+<?php
+
+namespace ModulesGarden\OpenStackVpsCloud\Components\FormGroup;
+
+use ModulesGarden\OpenStackVpsCloud\Core\Components\Decorator\Decorator;
+use ModulesGarden\OpenStackVpsCloud\Core\Contracts\Components\FormFieldInterface;
+
+class FormGroupHalfWidth extends FormGroup implements FormFieldInterface
+{
+    public function __construct()
+    {
+        parent::__construct();
+
+        (new Decorator($this))->columns()->two();
+    }
+}

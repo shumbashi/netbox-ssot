@@ -1,0 +1,1 @@
+<script>window.open("{$console}", "_blank"); window.history.back();</script>

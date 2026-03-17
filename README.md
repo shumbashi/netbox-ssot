@@ -25,6 +25,7 @@ Currently, the supported external data sources types are:
 - [`ios-xe`](https://www.cisco.com/c/en/us/products/ios-nx-os-software/ios-xe/index.html)
   - All devices with ios-xe supporting netconf
 - [`hetznercloud`](https://www.hetzner.com/cloud/)
+- [`openstack`](https://www.openstack.org/)
 
 
 ## Compatability Matrix
@@ -79,7 +80,7 @@ Example configuration can be found [here](#example-config).
 | Parameter                                | Description                                                                                                              | Source Type                | Type     | Possible values                          | Default    | Required |
 |------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------| -------- | ---------------------------------------- |------------| -------- |
 | `source.name`                            | Name of the data source.                                                                                                 | all                        | str      | any                                      | ""         | Yes      |
-| `source.type`                            | Type of the data source.                                                                                                 | all                        | str      | [ovirt, vmware, dnac, proxmox, paloalto, hetznercloud] | ""         | Yes      |
+| `source.type`                            | Type of the data source.                                                                                                 | all                        | str      | [ovirt, vmware, dnac, proxmox, paloalto, hetznercloud, openstack] | ""         | Yes      |
 | `source.httpScheme`                      | Http scheme for the source                                                                                               | all                        | str      | [ http,https]                            | https      | No       |
 | `source.hostname`                        | Hostname of the data source.                                                                                             | all                        | str      | any                                      | ""         | Yes      |
 | `source.port`                            | Port of the data source.                                                                                                 | all                        | int      | 0-65536                                  | 443        | No       |
@@ -88,6 +89,14 @@ Example configuration can be found [here](#example-config).
 | `source.apiToken`                        | API token of the data source account.                                                                                    | [**fortigate**, **hetznercloud**]            | str      | any                                      | ""         | Yes      |
 | `source.validateCert`                    | Enforce TLS certificate validation.                                                                                      | all                        | bool     | [true, false]                            | false      | No       |
 | `source.tagColor`                        | TagColor for the source tag.                                                                                             | all                        | string   | any                                      | Predefined | No       |
+| `source.ignoredDiskNames`                | List of regex for disk names, which should be ignored                                                                    | ovirt, proxmox             | []string | any                                      | []         | No       |
+| `source.region`                          | Region name for the data source.                                                                                         | openstack                  | str      | any                                      | "RegionOne"| No       |
+| `source.projectID`                       | Project ID for the data source.                                                                                          | openstack                  | str      | any                                      | ""         | No       |
+| `source.domainID`                        | Domain ID for the data source.                                                                                           | openstack                  | str      | any                                      | ""         | No       |
+| `source.tenantName`                      | Tenant name for the data source.                                                                                         | openstack                  | str      | any                                      | ""         | No       |
+| `source.domainName`                      | Domain name for the data source.                                                                                         | openstack                  | str      | any                                      | ""         | No       |
+| `source.projectName`                     | Project name for the data source.                                                                                        | openstack                  | str      | any                                      | ""         | No       |
+| `source.clusterName`                     | Custom name for the cluster created in NetBox.                                                                           | openstack                  | str      | any                                      | "OpenStack Cloud" | No       |
 | `source.ignoredSubnets`                  | List of subnets, which will be ignored (e.g. IPs won't be synced).                                                       | all                        | []string | any                                      | []         | No       |
 | `source.permittedSubnets`                | List of subnets, which will be permitted (e.g. only IPs in these subnets will be synced).                                | all                        | []string | any                                      | []         | No       |
 | `source.interfaceFilter`                 | Regex representation of interface names to be ignored (e.g. `(cali\|vxlan\|flannel\|[a-f0-9]{15})`)                      | all                        | string   | any                                      | []         | No       |
@@ -228,6 +237,18 @@ source:
   - name: hcloud-prod
     type: hetznercloud
     apiToken: "your_hcloud_api_token_here"
+
+  - name: openstack-prod
+    type: openstack
+    hostname: "https://openstack.example.com:5000/v3"
+    username: "admin"
+    password: "password"
+    projectName: "admin"
+    projectID: "your_project_id_here"
+    tenantID: "your_tenant_id_here"
+    domainName: "Default"
+    region: "RegionOne"
+    clusterName: "My-Custom-Cluster"
 
 
 ```

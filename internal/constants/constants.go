@@ -12,6 +12,7 @@ const (
 	FMC          SourceType = "fmc"
 	IOSXE        SourceType = "ios-xe"
 	HetznerCloud SourceType = "hetznercloud"
+	OpenStack    SourceType = "openstack"
 )
 
 const WildcardIP = "0.0.0.0"
@@ -91,6 +92,7 @@ var SourceTagColorMap = map[SourceType]string{
 	FMC:          ColorLightBlue,
 	IOSXE:        "0d294f",
 	HetznerCloud: "d50c2d",
+	OpenStack:    ColorLightBlue,
 }
 
 // Each source Mapping for source type tag. E.g. tag "paloalto" -> color orange.
@@ -103,6 +105,7 @@ var SourceTypeTagColorMap = map[SourceType]string{
 	FMC:          ColorBlue,
 	IOSXE:        "0d294f",
 	HetznerCloud: ColorRed,
+	OpenStack:    ColorLightBlue,
 }
 
 const (

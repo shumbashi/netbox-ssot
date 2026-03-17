@@ -1,0 +1,14 @@
+AccessControl: false
+Samples: false
+Logs: true
+ModuleSettings: true
+RequirementsChecker: true
+Queue: true
+DevTools: true
+Product: true
+Notifier: false
+MediaLibrary: true
+EasyTranslator: true
+CommandLine: true
+Mailer: true
+AppCenter: true

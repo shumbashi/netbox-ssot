@@ -1,0 +1,6 @@
+site_name: Framework
+docs_dir: ./
+
+plugins:
+  - search
+  - same-dir

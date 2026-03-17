@@ -79,13 +79,16 @@ func (hcs *HetznerCloudSource) syncLocationsAndDatacenters(nbi *inventory.Netbox
 
 func (hcs *HetznerCloudSource) syncServers(nbi *inventory.NetboxInventory) error {
 	// Create a default cluster for Hetzner Cloud Servers
-	clusterName := fmt.Sprintf("HetznerCloud-%s", hcs.SourceConfig.Name)
+	clusterTypeName := hcs.SourceConfig.ClusterType
+	if clusterTypeName == "" {
+		clusterTypeName = "Hetzner Cloud"
+	}
 	clusterType := &objects.ClusterType{
 		NetboxObject: objects.NetboxObject{
 			Tags: hcs.GetSourceTags(),
 		},
-		Name: "Hetzner Cloud",
-		Slug: utils.Slugify("Hetzner Cloud"),
+		Name: clusterTypeName,
+		Slug: utils.Slugify(clusterTypeName),
 	}
 	
 	netboxClusterType, err := nbi.AddClusterType(hcs.Ctx, clusterType)
@@ -93,6 +96,10 @@ func (hcs *HetznerCloudSource) syncServers(nbi *inventory.NetboxInventory) error
 		return fmt.Errorf("error creating cluster type: %s", err)
 	}
 
+	clusterName := hcs.SourceConfig.ClusterName
+	if clusterName == "" {
+		clusterName = fmt.Sprintf("HetznerCloud-%s", hcs.SourceConfig.Name)
+	}
 	cluster := &objects.Cluster{
 		NetboxObject: objects.NetboxObject{
 			Tags: hcs.GetSourceTags(),

@@ -20,6 +20,7 @@ import (
 	"github.com/src-doo/netbox-ssot/internal/source/proxmox"
 	"github.com/src-doo/netbox-ssot/internal/source/vmware"
 	"github.com/src-doo/netbox-ssot/internal/source/hetznercloud"
+	"github.com/src-doo/netbox-ssot/internal/source/openstack"
 	"github.com/src-doo/netbox-ssot/internal/utils"
 )
 
@@ -83,6 +84,8 @@ func NewSource(
 		return &iosxe.IOSXESource{Config: commonConfig}, nil
 	case constants.HetznerCloud:
 		return &hetznercloud.HetznerCloudSource{Config: commonConfig}, nil
+	case constants.OpenStack:
+		return &openstack.OpenStackSource{Config: commonConfig}, nil
 	default:
 		return nil, fmt.Errorf("unsupported source type: %s", config.Type)
 	}

@@ -1,0 +1,45 @@
+<?php
+
+namespace ModulesGarden\OpenStackVpsCloud\Components\NavBarItem;
+
+use ModulesGarden\OpenStackVpsCloud\Core\Components\AbstractComponent;
+use ModulesGarden\OpenStackVpsCloud\Core\Components\Traits\ComponentsContainerTrait;
+use ModulesGarden\OpenStackVpsCloud\Core\Components\Traits\TitleTrait;
+use ModulesGarden\OpenStackVpsCloud\Core\Components\Traits\UrlTrait;
+
+/**
+ * Class Form
+ */
+class NavBarItem extends AbstractComponent
+{
+    use TitleTrait;
+    use UrlTrait;
+    use ComponentsContainerTrait;
+
+    public const COMPONENT = 'NavBarItem';
+
+ 
+
+    public function setActive(bool $active): self
+    {
+        $this->setSlot('active', $active);
+
+        return $this;
+    }
+
+    public function setIcon(string $icon): self
+    {
+        $this->setSlot('icon', $icon);
+
+        return $this;
+    }
+
+
+
+    public function addItem(NavBarItem $item): self
+    {
+        $this->addElement($item);
+
+        return $this;
+    }
+}

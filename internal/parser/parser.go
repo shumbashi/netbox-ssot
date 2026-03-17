@@ -135,6 +135,15 @@ type SourceConfig struct {
 	AssignDomainName    string               `yaml:"assignDomainName"`
 	ContinueOnError     bool                 `yaml:"continueOnError"`
 	VlanPrefix          string               `yaml:"vlanPrefix"`
+	TenantName          string               `yaml:"tenantName"`
+	DomainName          string               `yaml:"domainName"`
+	ProjectName         string               `yaml:"projectName"`
+	Region              string               `yaml:"region"`
+	ProjectID           string               `yaml:"projectID"`
+	DomainID            string               `yaml:"domainID"`
+	TenantID            string               `yaml:"tenantID"`
+	ClusterName         string               `yaml:"clusterName"`
+	ClusterType         string               `yaml:"clusterType"`
 
 	// Relations
 	DatacenterClusterGroupRelations map[string]string `yaml:"datacenterClusterGroupRelations"`
@@ -195,6 +204,15 @@ func (sc *SourceConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		IPVrfRelations                  []string             `yaml:"ipVrfRelations"`
 		WlanTenantRelations             []string             `yaml:"wlanTenantRelations"`
 		CustomFieldMappings             []string             `yaml:"customFieldMappings"`
+		TenantName                      string               `yaml:"tenantName"`
+		DomainName                      string               `yaml:"domainName"`
+		ProjectName                     string               `yaml:"projectName"`
+		Region                          string               `yaml:"region"`
+		ProjectID                       string               `yaml:"projectID"`
+		DomainID                        string               `yaml:"domainID"`
+		TenantID                        string               `yaml:"tenantID"`
+		ClusterName                     string               `yaml:"clusterName"`
+		ClusterType                     string               `yaml:"clusterType"`
 	}
 	rawMarshal := realSourceConfig{}
 	if err := unmarshal(&rawMarshal); err != nil {
@@ -222,6 +240,15 @@ func (sc *SourceConfig) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	sc.IgnoreAssetTags = rawMarshal.IgnoreAssetTags
 	sc.IgnoreVMTemplates = rawMarshal.IgnoreVMTemplates
 	sc.ContinueOnError = rawMarshal.ContinueOnError
+	sc.TenantName = rawMarshal.TenantName
+	sc.DomainName = rawMarshal.DomainName
+	sc.ProjectName = rawMarshal.ProjectName
+	sc.Region = rawMarshal.Region
+	sc.ProjectID = rawMarshal.ProjectID
+	sc.DomainID = rawMarshal.DomainID
+	sc.TenantID = rawMarshal.TenantID
+	sc.ClusterName = rawMarshal.ClusterName
+	sc.ClusterType = rawMarshal.ClusterType
 
 	if len(rawMarshal.DatacenterClusterGroupRelations) > 0 {
 		err := utils.ValidateRegexRelations(rawMarshal.DatacenterClusterGroupRelations)
@@ -497,6 +524,7 @@ func validateSourceConfig(config *Config) error {
 		case constants.FMC:
 		case constants.IOSXE:
 		case constants.HetznerCloud:
+		case constants.OpenStack:
 		default:
 			return fmt.Errorf("%s.type is not valid", externalSourceStr)
 		}

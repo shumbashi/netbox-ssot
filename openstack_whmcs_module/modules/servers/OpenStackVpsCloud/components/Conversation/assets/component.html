@@ -1,0 +1,18 @@
+<div class="lu-widget__body">
+    <div class="lu-widget__content">
+
+        <div v-for="message in messages" :class="[getAlignment(message)]">
+            <div v-if="message.avatar" class="lu-avatar lu-i-c-4x lu-pull-left lu-m-r-1x">
+                <img :src="message.avatar" :alt="message.author">
+            </div>
+
+            <div :class="['lu-alert', 'lu-alert--outline', 'lu-alert--'+getType(message)]">
+                <div class="lu-alert__body">
+                    <component v-if="typeof message.content === 'object'" :key="message.content.uniq" v-bind="message.content.slots" v-bind:is="message.content.name"></component>
+                    <template v-else>{{message.content}}</template>
+                    <div>{{ message.date}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div id="id34847127781" class="lu-widget">
+    <div class="lu-widget__body">
+        <div class="lu-widget__content">
+            <div class="lu-rail lu-m-b-1x">
+                <div class="hidden-sm-down lu-m-r-1x" v-if="iconClass"><i :class="iconClass" class="lu-i-c-5x lu-mdi mdi"></i></div>
+                <div class="lu-type-6 lu-text-truncate"><span class="lu-heading">{{title_}}</span>{{usage_}} / {{limit_}}<span class="lu-type-8 lu-text-truncate"> {{unit_}}</span></div>
+            </div>
+            <div class="lu-row" v-if="!disableLabels_">
+                <div class="lu-col-md-6 lu-text-left" >{{currentLabel}}</div>
+                <div class="lu-col-md-6 lu-text-right">{{limitLabel}}</div>
+            </div>
+            <div class="lu-w-100">
+                <component :key="visualisationElement.uniq" v-bind="visualisationElement.slots" v-on="$listeners"
+                           v-bind:is="visualisationElement.name">
+                </component>
+            </div>
+        </div>
+    </div>
+</div>

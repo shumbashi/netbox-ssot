@@ -1,0 +1,67 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "3966853ddc90bf3e36903fbb66aa4a20",
+    "packages": [
+        {
+            "name": "modulesgarden/whmcs-framework",
+            "version": "dev-staging",
+            "source": {
+                "type": "git",
+                "url": "git@git.mglocal:whmcs-products/module-framework.git",
+                "reference": "6ca49da97165ced339d1ed7095322a3eae390062"
+            },
+            "type": "library",
+            "extra": {
+                "packages": [
+                    "ModuleSettings",
+                    "Notifier",
+                    "Logs",
+                    "Samples",
+                    "EasyTranslator",
+                    "MediaLibrary"
+                ],
+                "components": []
+            },
+            "autoload": {
+                "psr-4": {
+                    "ModulesGarden\\ModuleFramework\\Core\\": "./core",
+                    "ModulesGarden\\ModuleFramework\\App\\": "./app",
+                    "ModulesGarden\\ModuleFramework\\Packages\\": "./packages",
+                    "ModulesGarden\\ModuleFramework\\Components\\": "./components",
+                    "ModulesGarden\\ModuleFramework\\Fragments\\": "./fragments",
+                    "ModulesGarden\\ModuleFramework\\Install\\": "./install"
+                }
+            },
+            "scripts": {
+                "fw-install": [
+                    "\\ModulesGarden\\ModuleFramework\\Install\\Installer::run"
+                ]
+            },
+            "license": [
+                "EULA"
+            ],
+            "homepage": "https://www.modulesgarden.com",
+            "support": {
+                "email": "contact@modulesgarden.com",
+                "issues": "https://www.modulesgarden.com/customers/support",
+                "forum": "https://www.forum.modulesgarden.com/"
+            },
+            "time": "2025-11-25T09:53:29+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "modulesgarden/whmcs-framework": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}

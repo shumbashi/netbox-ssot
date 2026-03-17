@@ -1,0 +1,7 @@
+name:
+  AdminAreaFooterOutput: true
+  ClientAreaFooterOutput: true
+  AdminProductConfigFieldsSave: true
+  AdminAreaPage: true
+  ClientAreaPageProductDetails: true
+  ClientAreaPrimarySidebar: true
