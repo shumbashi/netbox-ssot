@@ -819,9 +819,15 @@ func (nbi *NetboxInventory) AddPlatform(
 	newPlatform.SetCustomField(constants.CustomFieldOrphanLastSeenName, nil)
 	nbi.platformsLock.Lock()
 	defer nbi.platformsLock.Unlock()
-	if _, ok := nbi.platformsIndexByName[newPlatform.Name]; ok {
+	var oldPlatform *objects.Platform
+	var exists bool
+
+	if oldPlatform, exists = nbi.platformsIndexByName[newPlatform.Name]; !exists {
+		oldPlatform, exists = nbi.platformsIndexBySlug[newPlatform.Slug]
+	}
+
+	if exists {
 		// Remove id from orphan manager, because it still exists in the sources
-		oldPlatform := nbi.platformsIndexByName[newPlatform.Name]
 		nbi.OrphanManager.RemoveItem(oldPlatform)
 		diffMap, err := utils.JSONDiffMapExceptID(
 			newPlatform,
@@ -836,7 +842,7 @@ func (nbi *NetboxInventory) AddPlatform(
 			nbi.Logger.Debugf(
 				ctx,
 				"Platform %s already exists in Netbox but is out of date. Patching it...",
-				newPlatform.Name,
+				oldPlatform.Name,
 			)
 			patchedPlatform, err := service.Patch[objects.Platform](
 				ctx,
@@ -848,8 +854,11 @@ func (nbi *NetboxInventory) AddPlatform(
 				return nil, err
 			}
 			nbi.platformsIndexByName[newPlatform.Name] = patchedPlatform
+			nbi.platformsIndexBySlug[newPlatform.Slug] = patchedPlatform
 		} else {
-			nbi.Logger.Debugf(ctx, "Platform %s already exists in Netbox and is up to date...", newPlatform.Name)
+			nbi.Logger.Debugf(ctx, "Platform %s already exists in Netbox and is up to date...", oldPlatform.Name)
+			nbi.platformsIndexByName[newPlatform.Name] = oldPlatform
+			nbi.platformsIndexBySlug[newPlatform.Slug] = oldPlatform
 		}
 	} else {
 		nbi.Logger.Debugf(ctx, "Platform %s does not exist in Netbox. Creating it...", newPlatform.Name)
@@ -858,6 +867,7 @@ func (nbi *NetboxInventory) AddPlatform(
 			return nil, err
 		}
 		nbi.platformsIndexByName[newPlatform.Name] = newPlatform
+		nbi.platformsIndexBySlug[newPlatform.Slug] = newPlatform
 	}
 	return nbi.platformsIndexByName[newPlatform.Name], nil
 }

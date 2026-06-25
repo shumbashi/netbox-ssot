@@ -89,6 +89,8 @@ type NetboxInventory struct {
 
 	// platformsIndexByName is a map of all platforms in the Netbox's inventory, indexed by their name
 	platformsIndexByName map[string]*objects.Platform
+	// platformsIndexBySlug is a map of all platforms in the Netbox's inventory, indexed by their slug
+	platformsIndexBySlug map[string]*objects.Platform
 	platformsLock        sync.Mutex
 
 	// tenantsIndexByName is a map of all tenants in the Netbox's inventory,

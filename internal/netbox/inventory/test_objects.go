@@ -309,6 +309,11 @@ var MockExistingPlatforms = map[string]*objects.Platform{
 	},
 }
 
+var MockExistingPlatformsBySlug = map[string]*objects.Platform{
+	"existing_platform1": MockExistingPlatforms["existing_platform1"],
+	"existing_platform2": MockExistingPlatforms["existing_platform2"],
+}
+
 var mockSite1 = &objects.Site{
 	NetboxObject: objects.NetboxObject{ID: 1},
 	Name:         "site1",
@@ -589,6 +594,7 @@ var MockInventory = &NetboxInventory{
 	deviceTypesIndexByModel:          MockExistingDeviceTypes,
 	deviceTypesLock:                  sync.Mutex{},
 	platformsIndexByName:             MockExistingPlatforms,
+	platformsIndexBySlug:             MockExistingPlatformsBySlug,
 	platformsLock:                    sync.Mutex{},
 	devicesIndexByNameAndSiteID:      MockExistingDevices,
 	devicesIndexByID:                 MockExistingDevicesByID,

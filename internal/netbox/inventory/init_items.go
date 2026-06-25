@@ -339,10 +339,12 @@ func (nbi *NetboxInventory) initPlatforms(ctx context.Context) error {
 	}
 	// Initialize internal index of platforms by name
 	nbi.platformsIndexByName = make(map[string]*objects.Platform)
+	nbi.platformsIndexBySlug = make(map[string]*objects.Platform)
 
 	for i, platform := range nbPlatforms {
 		nbPlatform := &nbPlatforms[i]
 		nbi.platformsIndexByName[platform.Name] = nbPlatform
+		nbi.platformsIndexBySlug[platform.Slug] = nbPlatform
 		nbi.OrphanManager.AddItem(nbPlatform)
 	}
 
