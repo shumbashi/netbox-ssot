@@ -1336,6 +1336,16 @@ func (nbi *NetboxInventory) AddIPAddress(
 		}
 	}
 
+	if nbi.ipAddressesIndex[objType][objName][ifaceName][indexKey] == nil {
+		existingIP, findErr := nbi.findReusableIPAddress(newIPAddress)
+		if findErr != nil {
+			return nil, findErr
+		}
+		if existingIP != nil {
+			return nbi.reassignIPAddress(ctx, existingIP, newIPAddress)
+		}
+	}
+
 	if _, ok := nbi.ipAddressesIndex[objType][objName][ifaceName][indexKey]; ok {
 		oldIPAddress := nbi.ipAddressesIndex[objType][objName][ifaceName][indexKey]
 		nbi.OrphanManager.RemoveItem(oldIPAddress)
@@ -1386,31 +1396,22 @@ func (nbi *NetboxInventory) AddIPAddress(
 			existingIPs, getErr := service.GetAll[objects.IPAddress](
 				ctx,
 				nbi.NetboxAPI,
-				fmt.Sprintf("&address=%s", url.QueryEscape(newIPAddress.Address)),
+				fmt.Sprintf("&address=%s", url.QueryEscape(ipHost(newIPAddress.Address))),
 			)
-			if getErr != nil || len(existingIPs) == 0 {
+			if getErr != nil {
+				return nil, fmt.Errorf("look up duplicate IP %s: %w", newIPAddress.Address, getErr)
+			}
+			if len(existingIPs) == 0 {
 				return nil, err
 			}
-			chosenIP := existingIPs[0]
-			for _, ip := range existingIPs {
-				if ip.AssignedObjectID == 0 {
-					chosenIP = ip
-					break
-				}
+			chosenIP, chooseErr := chooseReusableIPAddress(existingIPs, newIPAddress)
+			if chooseErr != nil {
+				return nil, chooseErr
 			}
-			patchData := map[string]interface{}{
-				"assigned_object_type": newIPAddress.AssignedObjectType,
-				"assigned_object_id":   newIPAddress.AssignedObjectID,
-				"dns_name":             newIPAddress.DNSName,
-				"tags":                 newIPAddress.Tags,
-				"custom_fields":        newIPAddress.CustomFields,
+			if chosenIP == nil {
+				return nil, fmt.Errorf("no matching IP in the requested VRF after duplicate response: %w", err)
 			}
-			patchedIP, patchErr := service.Patch[objects.IPAddress](ctx, nbi.NetboxAPI, chosenIP.ID, patchData)
-			if patchErr != nil {
-				return nil, err
-			}
-			nbi.ipAddressesIndex[objType][objName][ifaceName][indexKey] = patchedIP
-			return patchedIP, nil
+			return nbi.reassignIPAddress(ctx, chosenIP, newIPAddress)
 		}
 		nbi.ipAddressesIndex[objType][objName][ifaceName][indexKey] = createdIPAddress
 		return createdIPAddress, nil

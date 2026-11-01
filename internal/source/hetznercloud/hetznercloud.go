@@ -18,15 +18,13 @@ type Source struct {
 
 	// Hetzner Cloud API data initialized in init functions.
 	Locations   []*hcloud.Location
-	Datacenters []*hcloud.Datacenter
 	Servers     []*hcloud.Server
 	Networks    []*hcloud.Network
 	FloatingIPs []*hcloud.FloatingIP
 	PrimaryIPs  []*hcloud.PrimaryIP
 
 	// Netbox related data for easier access.
-	NetboxSites     map[string]*objects.Site     // Location City -> Netbox Site
-	NetboxLocations map[string]*objects.Location // Datacenter Name -> Netbox Location
+	NetboxSites map[string]*objects.Site // Location City -> Netbox Site
 }
 
 func (hcs *Source) Init() error {
@@ -44,9 +42,12 @@ func (hcs *Source) Init() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	return hcs.initData(ctx, client)
+}
+
+func (hcs *Source) initData(ctx context.Context, client *hcloud.Client) error {
 	initFuncs := []func(context.Context, *hcloud.Client) error{
 		hcs.initLocations,
-		hcs.initDatacenters,
 		hcs.initServers,
 		hcs.initNetworks,
 		hcs.initFloatingIPs,
@@ -72,7 +73,7 @@ func (hcs *Source) Init() error {
 
 func (hcs *Source) Sync(nbi *inventory.NetboxInventory) error {
 	syncFunctions := []func(*inventory.NetboxInventory) error{
-		hcs.syncLocationsAndDatacenters,
+		hcs.syncLocations,
 		hcs.syncServers,
 		hcs.syncNetworks,
 		hcs.syncFloatingIPs,

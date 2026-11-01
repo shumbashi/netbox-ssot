@@ -28,7 +28,9 @@ Currently, the supported external data sources types are:
 - [`f5`](https://www.f5.com/products/big-ip)
   - F5 BIG-IP LTM virtual servers (VIPs) via iControl REST API
 - [`hetznercloud`](https://www.hetzner.com/cloud/)
-  - Syncs locations, datacenters, servers, networks, floating IPs
+  - Syncs locations, servers, networks, floating IPs
+  - Maps location cities to NetBox sites. Datacenter endpoints were removed from the Hetzner API on
+    [October 1, 2026](https://docs.hetzner.cloud/changelog); existing datacenter-derived NetBox locations are retained.
 - [`openstack`](https://www.openstack.org/)
   - Syncs clusters, virtual machines, virtual disks, interfaces, and IP addresses
 
